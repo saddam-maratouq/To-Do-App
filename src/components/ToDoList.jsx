@@ -1,57 +1,54 @@
-import React, { useState } from 'react'
-import Result from './Result'
+import React, { useState,useEffect } from 'react'
+import Todo from './Todo'
 
-export default function ToDoList({mission,SetMisson,AddHanler}) {  
+export default function ToDoList({AddHanler,mission,SetMisson}) { 
 
-  const[Show,SetShow] = useState(false)
+    const [todo,SetTodo] = useState({
+        id : '', 
+        tasks : '' , 
 
-    const misssionHandler = (e) => {
-        const key = e.target.id
+    }) 
 
-        if(key === 'mission') {
-            
-        SetMisson(e.target.value) 
+
+    const taskHandel = (e) => {
+        SetTodo({...todo, tasks : e.target.value}) 
+
+    }  
+
+  
+
+    const submitHandler = (e) => {
+        e.preventDefault()  
+
+        if (todo.tasks) {
+            AddHanler({
+                
+                ...todo , 
+                id :   Math.round(Math.random() *1000), 
+              
+            })
         }
+       
+        
+
+    }
+
+    return ( 
+        <div>  
+      <form   onSubmit={submitHandler}>
+                <h1> what do you think to do today</h1> 
+
+
+          <input type="text" placeholder='Add Mission' id='mission' value={todo.tasks} onChange={taskHandel} /> 
+          <button  type='submit'>  Add  </button>
+
+
+      </form>
+      
+      <Todo  mission={mission}  SetMisson={SetMisson}  />
+
      
-    } 
 
-    const SubmitHandler = (e) => {
-        console.log(mission);  
-        e.preventDefault()
-
-
-     
-
-        AddHanler(
-
-            mission 
-    ) 
-
-        SetMisson('') 
-
-        SetShow(!Show) 
-
-    } 
-    
-
-
-
-    return (
-        <div> 
-            <form onSubmit={SubmitHandler}> 
-            <h1> what do you think to do today </h1>
-            <input type="text" placeholder='Add Mission' id='mission' value={mission}  onChange={misssionHandler}/> 
-
-            <button type='submit'>  Add Mission   </button>  
-
-          
-
-            {Show && 
-          <Result mission={mission}  />
-
-             
-            }   
-            </form> 
-        </div>
+      </div>
     )
 }

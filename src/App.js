@@ -3,7 +3,7 @@ import ToDoList from './components/ToDoList'
 
 export default function App() {
 
-  const [mission,SetMisson] = useState('')
+  const [mission,SetMisson] = useState([])
 
    
   
@@ -12,17 +12,15 @@ export default function App() {
 
   const AddHanler = (data) => { 
 
-    console.log(mission);
+    console.log(data);
 
-    SetMisson(() => (
-      SetMisson(data) 
-    ))
+   SetMisson([...mission,data]) 
 } 
 
 
   return (
     <div> 
-      <ToDoList mission={mission} SetMisson={SetMisson} AddHanler={AddHanler} /> 
+      <ToDoList  AddHanler={AddHanler} mission={mission} SetMisson={SetMisson} />  
     </div>
   )
 }
